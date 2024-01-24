@@ -183,6 +183,7 @@ article .subheading a {
 }
 
 .callout h2 {
+  margin-top: 0;
   color: $brightScnd;
 }
 
@@ -229,7 +230,7 @@ article .subheading a {
   gap: 1em;
 }
 
-.callout input[type="text"] {
+.callout input[type="email"] {
   font-size: 1em;
   padding: 0.8em;
   border: none;
@@ -375,7 +376,7 @@ article a code:not(pre > code) {
     color: $darkPrim;
   }
 
-  .callout input[type="text"] {
+  .callout input[type="email"] {
     color: $brightPrim;
   }
 

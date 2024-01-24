@@ -1,23 +1,69 @@
 <div class="callout">
   <h2>Idiomatic Rust content. Straight to your inbox.</h2>
   <p>
-    I regularly write new articles on idiomatic Rust. If you want to be
-    notified when I publish them, you should sign up to my newsletter here.
-    No spam. Unsubscribe at any time.
+    I regularly write new articles on idiomatic Rust. If you want to be notified
+    when I publish them, you should sign up to my newsletter here. No spam.
+    Unsubscribe at any time.
   </p>
+
   <form
-    action="https://tinyletter.com/mre"
     method="post"
-    target="popupwindow"
-    onsubmit="window.open('https://tinyletter.com/mre', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true"
+    action="https://app.loops.so/api/newsletter-form/clrrym3ph009mue9ev5t575ug"
   >
     <input
-      type="text"
+      id="email"
+      type="email"
       name="email"
+      minlength="5"
+      maxlength="100"
       placeholder="mail@example.com"
-      id="tlemail"
+      value=""
+      required
     />
-    <input type="hidden" value="1" name="embed" />
     <input type="submit" value="Subscribe" />
   </form>
 </div>
+
+<!-- 
+  Just sprinkling some JavaScript sugar on top of the form, which will make
+  the form submit via AJAX and show a success message.
+  The form works without, but it's a bit nicer with it.
+-->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var form = document.querySelector("form");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Collecting the email from the input field
+      var email = document.getElementById("email").value;
+
+      // URL-encoding the data
+      var formBody = 'email=' + encodeURIComponent(email);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: formBody,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+      })
+      .then(response => {
+        if (response.ok) {
+          document.querySelector(".callout").innerHTML = `
+            <h2>Thank you for subscribing!</h2>
+            <p>
+              You have successfully subscribed to the newsletter. 
+              We'll be in touch!
+            </p>`;
+        } else {
+          alert("Something went wrong. Please try again.");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred. Please try again.");
+      });
+    });
+  });
+</script>
